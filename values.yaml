@@ -1,0 +1,45 @@
+
+### MOUNTING EDITABLE DAGS ###
+
+volumes:
+  - name: host-mount
+    hostPath:
+      path: /mnt/workspace/dags  # Path on the host machine (minikube)
+      type: Directory            # Type of the host path
+
+volumeMounts:
+  - name: host-mount
+    mountPath: /opt/airflow/dags # Path to mount the volume inside the containers
+
+### AIRFLOW.CFG CONFIG ###
+config:
+  celery:
+    worker_concurrency: 2  # Adjust based on your worker capacity
+  webserver:
+    expose_config: True   # Expose the Airflow configuration to the webserver
+
+### COMMON ###
+defaultAirflowRepository: "local-airflow"
+defaultAirflowTag: "2.10"
+executor: "CeleryKubernetesExecutor"
+useStandardNaming: True
+
+### WORKERS ###
+workers:
+  replicas: 1  # Initial worker count
+  keda:
+    enabled: True
+    minReplicaCount: 1  # Minimum number of workers
+    maxReplicaCount: 3  # Maximum number of workers
+    pollingInterval: 5  # KEDA checks the queue every 5 seconds
+    cooldownPeriod: 30  # After scaling down, wait 30 seconds before further scaling
+
+  persistence:
+    enabled: True
+    size: 1Gi
+
+pgbouncer:
+  enabled: True
+  maxClientConn: 100
+  metadataPoolSize: 10
+  resultBackendPoolSize: 5

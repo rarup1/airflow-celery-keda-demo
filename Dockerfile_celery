@@ -1,0 +1,7 @@
+FROM apache/airflow:2.10.2
+
+# Install Python packages - pandas, polars, and data generator library
+RUN pip install --no-cache-dir \
+    pandas \
+    polars \
+    faker

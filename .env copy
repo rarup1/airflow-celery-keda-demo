@@ -1,0 +1,13 @@
+export NAMESPACE=airflow
+export MOUNT_PATH="/Users/rupert/Documents/Code/rupert-airflow/celery-executor-dag/dags"
+export MINIKUBE_DRIVER=docker
+export HELM_RELEASE_NAME=airflow
+export CHART_NAME=apache-airflow/airflow
+export VALUES_FILE=values.yaml
+export VARIABLES_FILE=variables.yaml
+export PVC_FILE=pvc.yaml
+export INSPECT_PVC_FILE=inspect-pvc.yaml
+
+export MEMORY=8192
+export CPUS=4
+export DISK_SIZE='20g'
