@@ -1,1 +1,5 @@
 .env
+
+# remove python hidden files
+*.pyc
+
